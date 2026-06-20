@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import api from '../services/api';
+import { useNavigate } from 'react-router-dom';
 
 const Classes = () => {
   const [classes, setClasses] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [className, setClassName] = useState('');
   const [description, setDescription] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchClasses();
@@ -60,7 +62,7 @@ const Classes = () => {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--border)', paddingTop: '1rem' }}>
               <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Students: <strong>{cls.students?.length || 0}</strong></span>
               <div style={{ display: 'flex', gap: '0.5rem' }}>
-                <button className="btn btn-outline" style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}>View Students</button>
+                <button className="btn btn-outline" style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }} onClick={() => navigate('/students')}>View Students</button>
                 <button className="btn btn-danger" style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }} onClick={() => handleDelete(cls._id)}>Delete</button>
               </div>
             </div>

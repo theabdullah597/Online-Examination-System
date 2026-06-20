@@ -9,12 +9,14 @@ const Dashboard = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [exams, setExams] = useState([]);
+  const [completedCount, setCompletedCount] = useState(0);
   const [stats, setStats] = useState(null);
 
   useEffect(() => {
     const fetchData = () => {
       if (user?.role === 'Student') {
         api.get('/student/exams').then(res => setExams(res.data.data)).catch(console.error);
+        api.get('/student/results').then(res => setCompletedCount(res.data.count)).catch(console.error);
       } else if (user?.role === 'Super Admin') {
         api.get('/admin/dashboard-stats').then(res => setStats(res.data.data)).catch(console.error);
       } else if (user?.role === 'Teacher') {
@@ -55,7 +57,7 @@ const Dashboard = () => {
               <div className="stat-icon" style={{ background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%)', color: 'var(--secondary)' }}><CheckCircle /></div>
               <div className="stat-info">
                 <h4>Completed</h4>
-                <h2 style={{ fontSize: '2.5rem', fontWeight: '800' }}>0</h2>
+                <h2 style={{ fontSize: '2.5rem', fontWeight: '800' }}>{completedCount}</h2>
               </div>
             </div>
           </div>
@@ -108,7 +110,7 @@ const Dashboard = () => {
               <div className="stat-icon" style={{ background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%)', color: 'var(--danger)' }}><ShieldAlert /></div>
               <div className="stat-info">
                 <h4>Security Logs</h4>
-                <h2 style={{ fontSize: '2.5rem', fontWeight: '800' }}>0</h2>
+                <h2 style={{ fontSize: '2.5rem', fontWeight: '800' }}>{stats.totalSecurityLogs || 0}</h2>
               </div>
             </div>
           </div>

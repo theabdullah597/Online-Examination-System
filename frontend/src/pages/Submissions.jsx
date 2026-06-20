@@ -3,6 +3,7 @@ import api from '../services/api';
 
 const Submissions = () => {
   const [attempts, setAttempts] = useState([]);
+  const [securityLogs, setSecurityLogs] = useState([]);
   const [selectedAttempt, setSelectedAttempt] = useState(null);
   const [grades, setGrades] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -15,6 +16,8 @@ const Submissions = () => {
     try {
       const res = await api.get('/teacher/attempts');
       setAttempts(res.data.data);
+      const logsRes = await api.get('/teacher/security-logs');
+      setSecurityLogs(logsRes.data.data);
     } catch (error) {
       console.error(error);
     }
@@ -94,6 +97,22 @@ const Submissions = () => {
             <h3 style={{ margin: 0, color: 'var(--primary)' }}>{selectedAttempt.score} / {selectedAttempt.examId.totalMarks}</h3>
           </div>
         </div>
+
+        {securityLogs.filter(log => String(log.attemptId._id || log.attemptId) === String(selectedAttempt._id)).length > 0 && (
+          <div className="card" style={{ marginBottom: '2rem', border: '1px solid var(--danger)', background: 'rgba(239, 68, 68, 0.05)' }}>
+            <h3 style={{ color: 'var(--danger)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              ⚠️ Security Violations Detected
+            </h3>
+            <ul style={{ listStyle: 'none', padding: 0 }}>
+              {securityLogs.filter(log => String(log.attemptId._id || log.attemptId) === String(selectedAttempt._id)).map((log, idx) => (
+                <li key={log._id || idx} style={{ marginBottom: '0.5rem', borderBottom: '1px solid rgba(239, 68, 68, 0.2)', paddingBottom: '0.5rem' }}>
+                  <strong style={{ color: 'var(--danger)' }}>{log.violationType.replace('_', ' ').toUpperCase()}</strong>: {log.details} 
+                  <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginLeft: '1rem' }}>{new Date(log.timestamp).toLocaleTimeString()}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', paddingBottom: '5rem' }}>
           {selectedAttempt.answers.map((ans, index) => {

@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const SecurityLog = require('../models/SecurityLog');
 const { sendEmail } = require('../services/emailService');
 
 const createTeacher = async (req, res) => {
@@ -111,6 +112,7 @@ const getDashboardStats = async (req, res) => {
   try {
     const totalTeachers = await User.countDocuments({ role: 'Teacher' });
     const totalStudents = await User.countDocuments({ role: 'Student' });
+    const totalSecurityLogs = await SecurityLog.countDocuments();
     
     // Get monthly registration data for charts (mock logic replaced with dynamic grouping)
     const currentYear = new Date().getFullYear();
@@ -147,6 +149,7 @@ const getDashboardStats = async (req, res) => {
       data: {
         totalTeachers,
         totalStudents,
+        totalSecurityLogs,
         chartData
       }
     });
