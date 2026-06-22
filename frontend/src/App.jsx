@@ -41,7 +41,7 @@ function App() {
           
           {/* Teacher Only Routes */}
           <Route path="/classes" element={<RoleRoute allowedRoles={['Teacher']}><Classes /></RoleRoute>} />
-          <Route path="/students" element={<RoleRoute allowedRoles={['Teacher']}><Students /></RoleRoute>} />
+          <Route path="/students" element={<RoleRoute allowedRoles={['Teacher', 'Super Admin']}><Students /></RoleRoute>} />
           <Route path="/questions" element={<RoleRoute allowedRoles={['Teacher']}><Questions /></RoleRoute>} />
           <Route path="/manage-exams" element={<RoleRoute allowedRoles={['Teacher']}><ManageExams /></RoleRoute>} />
           <Route path="/security-logs" element={<RoleRoute allowedRoles={['Super Admin', 'Teacher']}><SecurityLogs /></RoleRoute>} />

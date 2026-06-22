@@ -14,7 +14,7 @@ const { authorize } = require('../middlewares/roleMiddleware');
 const router = express.Router();
 
 router.use(protect);
-router.use(authorize('Teacher'));
+router.use(authorize('Teacher', 'Super Admin'));
 
 router.get('/dashboard-stats', getDashboardStats);
 router.get('/security-logs', getSecurityLogs);

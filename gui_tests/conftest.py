@@ -13,9 +13,13 @@ BASE_URL = "http://localhost:5173"
 def driver():
     """Returns an unauthenticated Chrome driver"""
     options = ChromeOptions()
-    # options.add_argument("--headless") # Uncomment for headless
+    options.add_argument("--headless=new")
     options.add_argument("--start-maximized")
     options.add_argument("--disable-notifications")
+    options.add_argument("--remote-allow-origins=*")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-gpu")
     
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
     driver.implicitly_wait(5)
@@ -53,7 +57,12 @@ def login_as(driver, wait, email, password):
 def admin_driver():
     """Authenticated driver for Admin"""
     options = ChromeOptions()
+    options.add_argument("--headless=new")
     options.add_argument("--start-maximized")
+    options.add_argument("--remote-allow-origins=*")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-gpu")
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
     wait = WebDriverWait(driver, 10)
     login_as(driver, wait, "admin@example.com", "Admin@123")
@@ -64,7 +73,12 @@ def admin_driver():
 def teacher_driver():
     """Authenticated driver for Teacher"""
     options = ChromeOptions()
+    options.add_argument("--headless=new")
     options.add_argument("--start-maximized")
+    options.add_argument("--remote-allow-origins=*")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-gpu")
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
     wait = WebDriverWait(driver, 10)
     login_as(driver, wait, "khayamazan369@gmail.com", "123456")
@@ -75,7 +89,12 @@ def teacher_driver():
 def student_driver():
     """Authenticated driver for Student"""
     options = ChromeOptions()
+    options.add_argument("--headless=new")
     options.add_argument("--start-maximized")
+    options.add_argument("--remote-allow-origins=*")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-gpu")
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
     wait = WebDriverWait(driver, 10)
     login_as(driver, wait, "theabullahx9779@gmail.com", "123456")

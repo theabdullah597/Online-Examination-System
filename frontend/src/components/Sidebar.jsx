@@ -12,6 +12,7 @@ const Sidebar = () => {
         return [
           { name: 'Dashboard', path: '/dashboard', icon: <LayoutDashboard size={20} /> },
           { name: 'Teachers', path: '/teachers', icon: <Users size={20} /> },
+          { name: 'Students', path: '/students', icon: <GraduationCap size={20} /> },
         ];
       case 'Teacher':
         return [
